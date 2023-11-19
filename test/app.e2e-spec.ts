@@ -1,4 +1,4 @@
-import { Test } from '@nestjs/testing'
+import { Test } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { PrismaService } from '../src/prisma/prisma.service';
@@ -9,7 +9,7 @@ import { CreateBookmarkDto, EditBookmarkDto } from '../src/bookmark/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
-  let prisma: PrismaService
+  let prisma: PrismaService;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -25,17 +25,15 @@ describe('App e2e', () => {
     await app.init();
     await app.listen(3333);
 
-    prisma = app.get(PrismaService)
+    prisma = app.get(PrismaService);
     await prisma.cleanDb();
     pactum.request.setBaseUrl('http://localhost:3333');
   });
 
-  
-
   afterAll(() => {
     app.close();
-  })
-  
+  });
+
   describe('Auth', () => {
     const dto: AuthDto = {
       email: 'vlad@gmail.com',
@@ -61,10 +59,7 @@ describe('App e2e', () => {
           .expectStatus(400);
       });
       it('should throw if no body provided', () => {
-        return pactum
-          .spec()
-          .post('/auth/signup')
-          .expectStatus(400);
+        return pactum.spec().post('/auth/signup').expectStatus(400);
       });
       it('should signup', () => {
         return pactum
@@ -95,10 +90,7 @@ describe('App e2e', () => {
           .expectStatus(400);
       });
       it('should throw if no body provided', () => {
-        return pactum
-          .spec()
-          .post('/auth/signin')
-          .expectStatus(400);
+        return pactum.spec().post('/auth/signin').expectStatus(400);
       });
       it('should signin', () => {
         return pactum
